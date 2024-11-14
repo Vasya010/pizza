@@ -1,0 +1,333 @@
+/* Основные стили для навбара */
+.navbar-container {
+  width: 100%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+}
+
+.pizza-logo {
+  height: 70px;
+  margin-right: 10px;
+  background-color: #f68b2d;
+  border-radius: 50%;
+}
+@media (max-width: 768px) {
+  .pizza-logo {
+    display: none; 
+  }
+}
+
+.brand-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff9f43;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+}
+
+.admin-button {
+  background-color: #ff9f43;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-button:hover {
+  background-color: #e67e22;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Бургер-меню */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger-icon {
+  font-size: 28px;
+  color: #333;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Секции ниже навбара */
+.navbar-links-container {  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  background-color: white;
+  align-items: center;
+}
+
+.navbar-links li {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 5px 10px;
+  background-color: #ff9f43; 
+  width: auto;
+  border-radius: 0 10px 0 10px;
+}
+
+.navbar-links a:hover {
+  color: #1f2800;
+  background-color: #ff7700;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background-color: #ddd;
+}
+
+.delivery-details,
+.contact-details {
+  text-align: left;
+}
+
+.info-heading,
+.contact-number {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rating-info,
+.contact-label {
+  font-size: 14px;
+  color: #636e72;
+}
+
+/* Стили для модального окна */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 111;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* Более темный прозрачный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px); /* Более размыт фон */
+}
+
+.modal-box {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.15)); /* Градиентный полупрозрачный фон */
+  border-radius: 20px; /* Более плавные углы */
+  padding: 30px;
+  width: 80%;
+  max-width: 500px;
+  color: white;
+  backdrop-filter: blur(15px) brightness(0.9); /* Сильное размытие и яркость */
+  position: relative;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.7); /* Глубокая тень */
+  animation: modalFadeIn 0.4s ease;
+  transition: all 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px); /* Более выразительная анимация */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ff9f43;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.close-modal-btn:hover {
+  color: #e67e22;
+  transform: rotate(90deg); /* Эффект вращения при наведении */
+}
+
+.modal-box form div {
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent; /* Без обводки по умолчанию */
+  background-color: rgba(255, 255, 255, 0.2); /* Прозрачные поля */
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5); /* Внутренняя тень */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border: 2px solid #ff9f43; /* Эффект фокуса */
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.submit-button {
+  background-color: #ff9f43;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 80%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s;
+  box-shadow: 0 4px 15px rgba(119, 58, 0, 0.6); /* Более яркий эффект тени кнопки */
+}
+
+.submit-button:hover {
+  background-color: #e67e22;
+}
+
+/* Адаптивные стили */
+@media (max-width: 817px) {
+  .modal-box {
+    padding: 20px;
+    max-width: 95%; /* Увеличиваем отступы от краев экрана */
+    margin: 0 auto; /* Центрируем */
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 14px;
+  }
+
+  .submit-button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .close-modal-btn {
+    font-size: 20px;
+  }
+  
+  .hamburger-menu {
+    display: block;
+  }
+
+  .navbar-links-container {
+    display: none;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 70px; /* Подстраиваем под навбар */
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
+  }
+
+  .mobile-menu .navbar-links {
+    flex-direction: column;
+    padding: 20px;
+    align-items: start;
+  }
+
+  .mobile-menu a {
+    padding: 10px 100px;
+  }
+  
+  .mobile-login-button {
+    background-color: #c7b532d0;
+    color: #fff;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 0 10px 0 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .mobile-login-button:hover {
+    background-color: #e67e22;
+  }
+
+  .admin-button {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .pizza-logo {
+    height: 40px;
+  }
+
+  .brand-name {
+    font-size: 22px;
+  }
+
+  .admin-button {
+    padding: 8px 15px;
+  }
+}

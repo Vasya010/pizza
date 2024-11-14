@@ -1,0 +1,77 @@
+/* Основной стиль для загрузочного экрана */
+.custom-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(230,230,250,1) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    transition: opacity 1s ease-in-out;
+}
+
+.custom-loader.custom-fade-out {
+    opacity: 0;
+    pointer-events: none; /* Чтобы исключить взаимодействие после исчезновения */
+}
+
+.custom-loader-content {
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.custom-loader-content img {
+    width: 120px; /* Измените размер логотипа при необходимости */
+    height: auto;
+    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.1)); /* Мягкая тень для объёма */
+    animation: logo-bounce 2s infinite ease-in-out;
+}
+
+/* Анимация для логотипа (лёгкое пульсирование) */
+@keyframes logo-bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Плавное появление */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стили для текста */
+.custom-loader-content h2 {
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #37474f;
+    font-size: 1.8rem;
+    letter-spacing: 0.05rem;
+    background: linear-gradient(90deg, rgba(0,143,255,1) 0%, rgba(0,253,255,1) 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    animation: fadeText 2.5s forwards 1.5s;
+}
+
+/* Анимация плавного появления текста */
+@keyframes fadeText {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
