@@ -74,7 +74,7 @@ const OrderPage = () => {
         cartItems: JSON.stringify(cartItems),
       });
   
-      const response = await fetch(`https://nukesul-backend-1bde.twc1.net/api/send-order?${queryParams.toString()}`, {
+      const response = await fetch(`http://localhost:5000?${queryParams.toString()}`, {
         method: 'GET',
       });
   
@@ -101,7 +101,7 @@ const OrderPage = () => {
           Доставка
         </button>
         <button className="button_buy" onClick={() => setIsOrderSection(true)}>
-          Сабой
+          С собой
         </button>
       
       </div>
@@ -109,7 +109,7 @@ const OrderPage = () => {
       <div className="items-section">
         {cartItems.map((item) => (
           <div key={item.id} className="order-item">
-            <img src={`https://nukesul-backend-1bde.twc1.net${item.image}`} alt={item.name} />
+            <img src={`http://localhost:5000${item.image}`} alt={item.name} />
             <div className="order-item-info">
               <h3>{item.name}</h3>
               <p>{item.price} сом</p>
@@ -137,7 +137,7 @@ const OrderPage = () => {
         <h3 className="total-price">Итого: {calculateTotal()} сом</h3>
 
         <h2>
-          {isOrderSection ? "Сабой" : "Доставка"}
+          {isOrderSection ? "С собой" : "Доставка"}
         </h2>
         {isOrderSection ? (
           <>

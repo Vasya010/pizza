@@ -1,95 +1,112 @@
+/* Общие стили футера */
 .footer-container {
-    background: linear-gradient(to right, #ff5722, #ffcc00);
-    color: #ffffff;
-    padding: 40px 20px;
-    text-align: center;
-    position: relative;
-  }
-  
+  background: #1d1d1d;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.footer-logo h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FF8A00;
+  margin-bottom: 5px;
+}
+
+.footer-logo p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #aaa;
+}
+
+.footer-links h3, .footer-contact h3, .footer-social h3 {
+  font-size: 1.2rem;
+  color: #FF8A00;
+  margin-bottom: 15px;
+}
+
+.footer-links ul {
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-links a, .footer-contact a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-contact a:hover {
+  color: #FFB91F;
+}
+
+.footer-social .social-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.footer-social .social-icons a {
+  color: #fff;
+  font-size: 1.8rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social .social-icons a:hover {
+  color: #FFB91F;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 30px;
+}
+
+.footer-bottom a {
+  color: #FFB91F;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
   .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  
-  .footer-logo {
-    flex: 1 1 250px;
-  }
-  
-  .footer-logo h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-  }
-  
-  .footer-links, .footer-contact, .footer-social {
-    flex: 1 1 200px;
-    margin: 10px;
-  }
-  
-  .footer-links h3, .footer-contact h3, .footer-social h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-  
-  .footer-links ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .footer-links li {
-    margin: 5px 0;
-  }
-  
-  .footer-links a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .footer-links a:hover {
-    color: #ffcc00;
-  }
-  
-  .footer-social {
-    display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
-  .social-icons {
-    display: flex;
+
+  .footer-logo {
+    margin-bottom: 20px;
+  }
+
+  .footer-links ul li {
+    margin-bottom: 5px;
+  }
+
+  .footer-social .social-icons {
     justify-content: center;
-    margin-top: 10px;
+    gap: 15px;
   }
-  
-  .social-icons a {
-    margin: 0 10px;
-    color: #ffffff;
-    font-size: 24px;
-    transition: color 0.3s;
-  }
-  
-  .social-icons a:hover {
-    color: #ffcc00;
-  }
-  
+
   .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 20px;
-    margin-top: 20px;
+    font-size: 0.8rem;
   }
-  
-  .footer-bottom p {
-    margin: 0;
-  }
-  
-  /* Адаптивные стили */
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-  
+}

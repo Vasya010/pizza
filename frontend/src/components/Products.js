@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Cart from "./Cart"; // Импортируем компонент Cart
 import "../styles/Products.css";
-
+import halal from "../images/halal_png.png";
 function Products() {
   const [products, setProducts] = useState([]);
   const [menuItems, setMenuItems] = useState({});
@@ -13,7 +13,7 @@ function Products() {
   const categories = useRef([]);
 
   useEffect(() => {
-    fetch("https://nukesul-backend-1bde.twc1.net/api/products")
+    fetch("http://localhost:5000/api/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -113,7 +113,7 @@ function Products() {
         >
           <img
             className="menu-product-image"
-            src={`https://nukesul-backend-1bde.twc1.net${product.image_url}`}
+            src={`http://localhost:5000${product.image_url}`}
             alt={product.name}
           />
           <div className="menu-product-info">
@@ -132,7 +132,7 @@ function Products() {
 
   return (
     <div className="menu-wrapper">
-        <h2 className="Mark_Shop">Часто продаваемые товары</h2>
+      <h2 className="Mark_Shop">Часто продаваемые товары</h2>
 
       <div className="best-sellers">
         {products
@@ -147,7 +147,7 @@ function Products() {
             >
               <img
                 className="best-seller-product-image"
-                src={`https://nukesul-backend-1bde.twc1.net${product.image_url}`}
+                src={`http://localhost:5000${product.image_url}`}
                 alt={product.name}
               />
               <div className="best-seller-product-info">
@@ -162,22 +162,36 @@ function Products() {
             </div>
           ))}
       </div>
-        
-      <div className='option__container'>
-        <div className='option__name'>
+      <div className="halal_box">
+          <img className="halal_img" src={halal} />
+          <h1>
+            Без свинины
+            <p> Мы готовим из цыпленка и говядины</p>
+          </h1>
+        </div>
+      <div className="option__container">
+        <div className="option__name">
           <ul>
-            {Object.keys(menuItems).map((category, index) => (
-              category !== 'Часто продаваемые товары' && ( // Исключаем "Часто продаваемые товары"
-                <li key={category}> {/* Уникальный ключ на основе имени категории */}
-                  <a href="#" onClick={(e) => {
-                    e.preventDefault();
-                    categories.current[index].current.scrollIntoView({ behavior: 'smooth' });
-                  }}>
-                    {category}
-                  </a>
-                </li>
-              )
-            ))}
+            {Object.keys(menuItems).map(
+              (category, index) =>
+                category !== "Часто продаваемые товары" && ( // Исключаем "Часто продаваемые товары"
+                  <li key={category}>
+                    {" "}
+                    {/* Уникальный ключ на основе имени категории */}
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        categories.current[index].current.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      {category}
+                    </a>
+                  </li>
+                )
+            )}
           </ul>
         </div>
       </div>
@@ -201,7 +215,7 @@ function Products() {
                     >
                       <img
                         className="menu-product-image"
-                        src={`https://nukesul-backend-1bde.twc1.net${product.image_url}`}
+                        src={`http://localhost:5000${product.image_url}`}
                         alt={product.name}
                       />
                       <div className="menu-product-info">
@@ -236,7 +250,7 @@ function Products() {
             </button>
             <div className="modal-body">
               <img
-                src={`https://nukesul-backend-1bde.twc1.net${selectedProduct.product.image_url}`}
+                src={`http://localhost:5000${selectedProduct.product.image_url}`}
                 alt={selectedProduct.product.name}
                 className="modal-image"
               />

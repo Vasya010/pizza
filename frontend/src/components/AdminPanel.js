@@ -12,15 +12,18 @@ function AdminPanel() {
   const [priceLarge, setPriceLarge] = useState('');
   const [productsPrice, setProductsPrice] = useState('');
   const [products, setProducts] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editMode, setEditMode] = useState(false); // Режим редактирования
+  const [editingProductId, setEditingProductId] = useState(null); // ID редактируемого продукта
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://nukesul-backend-1bde.twc1.net/api/products');
+        const response = await fetch('http://localhost:5000/api/products');
         const data = await response.json();
         setProducts(data);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Ошибка при загрузке товаров:', error);
       }
     };
 
@@ -56,9 +59,30 @@ function AdminPanel() {
     setProductsPrice('');
   };
 
+  const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm('Вы уверены, что хотите удалить этот продукт?');
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
+        alert('Продукт удален!');
+      } else {
+        const errorText = await response.text();
+        alert(`Ошибка при удалении продукта: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Ошибка при удалении продукта:', error);
+      alert('Произошла ошибка при удалении продукта.');
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // Дизейблим кнопку после нажатия
+    setIsSubmitting(true);
 
     const formData = new FormData();
     if (image) formData.append('image', image);
@@ -75,50 +99,111 @@ function AdminPanel() {
       formData.append('price', parseFloat(productsPrice));
     } else {
       alert('Укажите цену для товара!');
-      setIsSubmitting(false); // Включаем кнопку снова в случае ошибки
+      setIsSubmitting(false);
       return;
     }
 
     try {
-      const response = await fetch('https://nukesul-backend-1bde.twc1.net/api/products', {
-        method: 'POST',
+      const url = editMode
+        ? `http://localhost:5000/api/products/${editingProductId}`
+        : 'http://localhost:5000/api/products';
+      const method = editMode ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         body: formData,
       });
 
       if (response.ok) {
-        const newProduct = await response.json();
-        setProducts([...products, newProduct]);
-        alert('Продукт добавлен!');
+        const productData = await response.json();
+        if (editMode) {
+          setProducts((prevProducts) =>
+            prevProducts.map((product) =>
+              product.id === editingProductId ? productData : product
+            )
+          );
+          alert('Продукт обновлен!');
+        } else {
+          setProducts([...products, productData]);
+          alert('Продукт добавлен!');
+        }
         resetFormFields();
+        setEditMode(false);
+        setEditingProductId(null);
       } else {
         const errorText = await response.text();
-        alert(`Ошибка при добавлении продукта: ${errorText}`);
+        alert(`Ошибка при ${editMode ? 'обновлении' : 'добавлении'} продукта: ${errorText}`);
       }
     } catch (error) {
-      console.error('Ошибка при добавлении продукта:', error);
-      alert('Произошла ошибка при добавлении продукта.');
+      console.error('Ошибка при обработке продукта:', error);
+      alert('Произошла ошибка при обработке продукта.');
     }
 
-    setIsSubmitting(false); // Снова активируем кнопку после завершения
+    setIsSubmitting(false);
   };
 
-  const handleDelete = async (productId) => {
-    const confirmDelete = window.confirm('Вы уверены, что хотите удалить этот продукт?');
-    if (!confirmDelete) return;
+  const handleEdit = (product) => {
+    setEditMode(true);
+    setEditingProductId(product.id);
+    setName(product.name);
+    setDescription(product.description);
+    setCategory(product.category);
+    setSubCategory(product.subCategory || '');
+    setPriceSmall(product.price_small || '');
+    setPriceMedium(product.price_medium || '');
+    setPriceLarge(product.price_large || '');
+    setProductsPrice(product.price || '');
+  };
 
-    try {
-      const response = await fetch(`https://nukesul-backend-1bde.twc1.net/api/products/${productId}`, {
-        method: 'DELETE',
-      });
+  const renderPriceFields = () => {
+    if (!category && !subCategory) {
+      return null; // Поля цен не отображаются, пока не выбрана категория
+    }
 
-      if (response.ok) {
-        setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
-        alert('Продукт удален!');
-      } else {
-        alert('Произошла ошибка при удалении продукта.');
-      }
-    } catch (error) {
-      alert('Произошла ошибка при удалении продукта.');
+    if (category === 'Пиццы' || subCategory === 'Пиццы') {
+      return (
+        <>
+          <div>
+            <label>Цена (Маленькая):</label>
+            <input
+              type="text"
+              value={priceSmall}
+              onChange={(e) => setPriceSmall(e.target.value)}
+              required={!editMode || category === 'Пиццы'}
+            />
+          </div>
+          <div>
+            <label>Цена (Средняя):</label>
+            <input
+              type="text"
+              value={priceMedium}
+              onChange={(e) => setPriceMedium(e.target.value)}
+              required={!editMode || category === 'Пиццы'}
+            />
+          </div>
+          <div>
+            <label>Цена (Большая):</label>
+            <input
+              type="text"
+              value={priceLarge}
+              onChange={(e) => setPriceLarge(e.target.value)}
+              required={!editMode || category === 'Пиццы'}
+            />
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <div>
+          <label>Цена:</label>
+          <input
+            type="text"
+            value={productsPrice}
+            onChange={(e) => setProductsPrice(e.target.value)}
+            required
+          />
+        </div>
+      );
     }
   };
 
@@ -135,7 +220,7 @@ function AdminPanel() {
             filteredProducts.map((product) => (
               <div key={product.id} className="product-card">
                 <img
-                  src={`https://nukesul-backend-1bde.twc1.net${product.image_url}`}
+                  src={`http://localhost:5000${product.image_url}`}
                   alt={product.name}
                   className="product-image"
                 />
@@ -152,6 +237,9 @@ function AdminPanel() {
                 ) : (
                   <p>Цена не указана</p>
                 )}
+                <button className="edit-button" onClick={() => handleEdit(product)}>
+                  Редактировать
+                </button>
                 <button className="delete-button" onClick={() => handleDelete(product.id)}>
                   Удалить
                 </button>
@@ -189,7 +277,6 @@ function AdminPanel() {
             <option value="Напитки">Напитки</option>
             <option value="Лимонады">Лимонады</option>
             <option value="Коктейлы">Коктейлы</option>
-
             <option value="Кофе">Кофе</option>
           </select>
         </div>
@@ -217,51 +304,7 @@ function AdminPanel() {
           </div>
         )}
 
-        {category && (
-          <>
-            {category === 'Пиццы' || subCategory === 'Пиццы' ? (
-              <>
-                <div>
-                  <label>Цена (Маленькая):</label>
-                  <input
-                    type="text"
-                    value={priceSmall}
-                    onChange={(e) => setPriceSmall(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Цена (Средняя):</label>
-                  <input
-                    type="text"
-                    value={priceMedium}
-                    onChange={(e) => setPriceMedium(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Цена (Большая):</label>
-                  <input
-                    type="text"
-                    value={priceLarge}
-                    onChange={(e) => setPriceLarge(e.target.value)}
-                    required
-                  />
-                </div>
-              </>
-            ) : (
-              <div>
-                <label>Цена:</label>
-                <input
-                  type="text"
-                  value={productsPrice}
-                  onChange={(e) => setProductsPrice(e.target.value)}
-                  required
-                />
-              </div>
-            )}
-          </>
-        )}
+        {renderPriceFields()}
 
         <div>
           <label>Название:</label>
@@ -279,7 +322,13 @@ function AdminPanel() {
         </div>
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Добавление...' : 'Добавить продукт'}
+          {isSubmitting
+            ? editMode
+              ? 'Обновление...'
+              : 'Добавление...'
+            : editMode
+            ? 'Обновить продукт'
+            : 'Добавить продукт'}
         </button>
       </form>
 
@@ -297,10 +346,7 @@ function AdminPanel() {
         {renderProductsByCategory('Завтраки')}
         {renderProductsByCategory('Шаурмы')}
         {renderProductsByCategory('Салаты')}
-        {renderProductsByCategory('Соусы')}
         {renderProductsByCategory('Напитки')}
-        {renderProductsByCategory('Лимонады')}
-        {renderProductsByCategory('Коктейлы')}
         {renderProductsByCategory('Кофе')}
       </div>
     </div>

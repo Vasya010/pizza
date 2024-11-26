@@ -11,7 +11,7 @@ import AdminPanel from './components/AdminPanel';
 import Adminlogin from './components/adminlogin/Adminlogin';
 import Aboud from "./components/Aboud";
 import Loader from './components/Loader/Loader';
-
+// import Stories from './components/Stories';
 function App() {
   const userId = 1; // Замените на нужное значение
   const [cartItems, setCartItems] = useState([]);
@@ -46,6 +46,7 @@ function App() {
   return (
     <Router>
       <Nav />
+      {/* <Stories /> */}
       <Routes>
         {/* Главная страница с Products и Footer */}
         <Route 
