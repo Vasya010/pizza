@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 import Nav from './components/Nav';
 import Footer from './components/Footer';
@@ -11,7 +11,23 @@ import AdminPanel from './components/AdminPanel';
 import Adminlogin from './components/adminlogin/Adminlogin';
 import Aboud from "./components/Aboud";
 import Loader from './components/Loader/Loader';
-// import Stories from './components/Stories';
+import LoginForm from './components/Login/Lofginform';
+import Registerform from './components/Register/Registerform';
+
+
+
+// Компонент для проверки текущего пути
+function NavWrapper({ children }) {
+  const location = useLocation();
+  const showNav = location.pathname === '/'; // Показывать Nav только на главной странице
+  return (
+    <>
+      {showNav && <Nav />}
+      {children}
+    </>
+  );
+}
+
 function App() {
   const userId = 1; // Замените на нужное значение
   const [cartItems, setCartItems] = useState([]);
@@ -44,36 +60,44 @@ function App() {
   }
 
   return (
+
     <Router>
-      <Nav />
-      {/* <Stories /> */}
-      <Routes>
-        {/* Главная страница с Products и Footer */}
-        <Route 
-          path="/" 
-          element={
-            <div>
-              <Products updateCart={updateCart} /> {/* Передаем updateCart в Products */}
-              <Footer />
-              <Cart cartItems={cartItems} updateCart={updateCart} /> {/* Вставляем компонент Cart на главной странице */}
-            </div>
-          } 
-        />
+  
+      <NavWrapper>
+        <Routes>
+          {/* Главная страница с Products и Footer */}
+          <Route 
+            path="/" 
+            element={
+              <div>
+                <Products updateCart={updateCart} /> {/* Передаем updateCart в Products */}
+                <Footer />
+                <Cart cartItems={cartItems} updateCart={updateCart} /> {/* Вставляем компонент Cart на главной странице */}
+              </div>
+            } 
+          />
 
-        {/* Страница оформления заказа */}
-        <Route 
-          path="/order" 
-          element={<OrderPage cartItems={cartItems} updateCart={updateCart} />} 
-        />
+          {/* Страница оформления заказа */}
+          <Route 
+            path="/order" 
+            element={<OrderPage cartItems={cartItems} updateCart={updateCart} />} 
+          />
 
-        {/* Страница Admin */}
-        <Route path="/Admin" element={<Adminlogin userId={userId} />} />
-        <Route path="/AdminPanel" element={<AdminPanel />} />
+          {/* Страница Admin */}
+          <Route path="/Admin" element={<Adminlogin userId={userId} />} />
+          <Route path="/AdminPanel" element={<AdminPanel />} />
 
-        {/* Страница "О нас" */}
-        <Route path="/about" element={<Aboud />} /> {/* Добавляем роут для страницы "О нас" */}
-      </Routes>
+          {/* Страница "О нас" */}
+          <Route path="/about" element={<Aboud />} /> {/* Добавляем роут для страницы "О нас" */}
+
+          <Route path="/login" element={<LoginForm />} /> {/* вход" */}
+
+          <Route path="/register" element={<Registerform />} /> {/* вход" */}
+        </Routes>
+      </NavWrapper>
+     
     </Router>
+  
   );
 }
 

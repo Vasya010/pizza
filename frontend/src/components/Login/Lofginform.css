@@ -1,0 +1,148 @@
+/* Основной контейнер страницы */
+.background-container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Градиент с глубокими синими оттенками */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    overflow: hidden;
+    transition: background 0.5s ease-in-out;
+}
+
+/* Форма */
+.form-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 50px;
+    background: rgba(20, 20, 20, 0.85); /* Глубокий черный с легкой прозрачностью */
+    border-radius: 20px;
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.7); /* Мягкий акцент */
+    backdrop-filter: blur(10px); /* Легкий эффект размытия */
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s;
+}
+
+/* Заголовок */
+.claski1 {
+    text-align: center;
+    color: #4caf50; /* Зеленый акцент */
+    margin-bottom: 20px;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 4px 10px rgba(76, 175, 80, 0.5); /* Светящийся эффект */
+}
+
+.claski1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #4caf50;
+    margin: 15px auto 0;
+    border-radius: 5px;
+}
+
+/* Описание */
+p {
+    text-align: center;
+    color: #b0bec5; /* Серый для нейтральности */
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+}
+
+/* Группы полей формы */
+.form-group {
+    margin-bottom: 30px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #4caf50;
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input-field {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #3c4043; /* Темно-серый бордер */
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #1c1c1c; /* Темный фон для инпута */
+    color: #e0e0e0; /* Светлый текст */
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #4caf50; /* Зеленый акцент */
+    background: #292929; /* Подсветка при фокусе */
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.8); /* Светящийся эффект */
+    outline: none;
+}
+
+/* Кнопки */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button {
+    padding: 15px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(to right, #4caf50, #8bc34a);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    font-family: 'Poppins', sans-serif;
+}
+
+.button:hover {
+    background: linear-gradient(to right, #388e3c, #66bb6a);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover эффект для формы */
+.form-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.8);
+    background: rgba(20, 20, 20, 0.95); /* Чуть плотнее при наведении */
+}
+
+/* Ссылка на регистрацию */
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.register-link a {
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #81c784; /* Более светлый оттенок зеленого */
+    text-decoration: underline;
+}

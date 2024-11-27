@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './../styles/AdminPanel.css';
 
 function AdminPanel() {
+    const [users, setUsers] = useState([]); // Список пользователей
+  const [promoCode, setPromoCode] = useState(''); // Промокод
+  const [selectedUserId, setSelectedUserId] = useState(null); // ID выбранного пользователя
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
@@ -117,6 +120,7 @@ function AdminPanel() {
       if (response.ok) {
         const productData = await response.json();
         if (editMode) {
+          // Обновляем продукт в списке без перезагрузки
           setProducts((prevProducts) =>
             prevProducts.map((product) =>
               product.id === editingProductId ? productData : product
